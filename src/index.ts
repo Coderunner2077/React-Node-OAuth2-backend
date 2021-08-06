@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import session from "express-session";
 import passport from "passport";
+import authRoutes from "./routes/auth-routes";
+import "./config/passport-setup.ts";
 
 dotenv.config();
 
@@ -28,9 +30,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/", (req, res) => {
+app.get("/", (req: any, res) => {
+    console.log("logged", req.session)
     res.send("Welcome to React Node oAuth App");
 });
+
+app.use("/auth", authRoutes);
 
 app.listen(process.env.PORT || 4000, () => {
     console.log("Server started");
