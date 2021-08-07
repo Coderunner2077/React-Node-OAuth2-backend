@@ -4,6 +4,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 import User from "../models/user.model";
 import IMongoDBUser from "../types";
 const FacebookStrategy = require("passport-facebook").Strategy;
+const GithubStrategy = require("passport-github2").Strategy;
 
 dotenv.config();
 
@@ -21,28 +22,45 @@ passport.deserializeUser((id: string, done: any) => {
     });
 });
 
+const strategyCallback = (strategy: string, usernameValue: string, profile: any, done: any) => {
+    let where = {};
+    switch(strategy) {
+        case "google":
+            where = { googleId: profile.id };
+            break;
+        case "facebook":
+            where = { facebookId: profile.id };
+            break;
+        case "github":
+            where = { githubId: profile.id };
+            break;
+        default:
+            where = { googleId: profile.id };
+    }
+    console.log(strategy, where);
+    User.findOne(where, async (err: Error, user: IMongoDBUser) => {
+        if(err)
+            return done(err, null);
+        if(user) {
+            return done(null, user);
+        } else {
+            const newUser = new User({ 
+                username: usernameValue, ...where
+            });
+            await newUser.save();
+            console.log("New User created ", newUser);
+            return done(null, newUser);
+        }
+            
+    });
+}
 passport.use(new GoogleStrategy({
     clientID: `${process.env.GOOGLE_CLIENT_ID}`,
     clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
     callbackURL: "/auth/google/callback"
   },
   function(accessToken: any, refreshToken: any, profile: any, done: any) {
-    User.findOne({ googleId: profile.id }, async (err: Error, user: IMongoDBUser) => {
-        if(err)
-            return done(err, false);
-        if(user) {
-            console.log(user);
-            done(null, user);
-        } else {
-            const newUser = new User({ 
-                username: profile.name.givenName, googleId: profile.id
-            });
-            await newUser.save();
-            console.log("New User created ", newUser);
-            done(null, newUser);
-        }
-            
-    });
+    strategyCallback("google", profile.name.givenName, profile, done);
   }
 ));
 
@@ -52,21 +70,15 @@ passport.use(new FacebookStrategy({
     callbackURL: "/auth/facebook/callback"
 }, 
     (accessToken: any, refreshToken: any, profile: any, done: any) => {
-        User.findOne({ facebookId: profile.id}, async (err: Error, user: IMongoDBUser) => {
-            if(err)
-                return done(err, false);
-            if(user) {
-                console.log(user);
-                done(null, user);
-            } else {
-                const username = profile.displayName.replace(" ", "");
-                const newUser = new User({ 
-                    username, facebookId: profile.id
-                });
-                await newUser.save();
-                console.log("New User created ", newUser);
-                done(null, newUser);
-            }
-        });
+        strategyCallback("facebook", profile.displayName.replace(" ", ""), profile, done);
+    }
+));
+
+passport.use(new GithubStrategy({
+    clientID: `${process.env.GITHUB_CLIENT_ID}`,
+    clientSecret: `${process.env.GITHUB_CLIENT_SECRET}`,
+    callbackURL: "/auth/github/callback"
+},  (accessToken: any, refreshToken: any, profile: any, done: any) => {
+        strategyCallback("github", profile.username, profile, done);
     }
 ))

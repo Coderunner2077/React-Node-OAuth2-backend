@@ -18,6 +18,14 @@ router.get("/facebook/callback", passport.authenticate("facebook", { failureRedi
     }
 );
 
+router.get("/github", passport.authenticate("github"));
+
+router.get("/github/callback", passport.authenticate("github", { failureRedirect: "/login"}), 
+    (req: any, res: any) => {
+        res.redirect(process.env.CLIENT_ORIGIN);
+    }
+);
+
 router.get("/user", (req: any, res: any) => {
     res.send(req.user);
 });
