@@ -30,4 +30,10 @@ router.get("/user", (req: any, res: any) => {
     res.send(req.user);
 });
 
+router.get("/logout", (req: any, res:any) => {
+    if(req.user) {
+        req.logout();
+        res.send("success");
+    }
+})
 export default router;

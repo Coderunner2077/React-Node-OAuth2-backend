@@ -21,7 +21,7 @@ const app = express();
 
 // 1. Middlewares
 app.use(express.json());
-app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }));
+app.use(cors({ origin: `${process.env.CLIENT_ORIGIN}`, credentials: true }));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
