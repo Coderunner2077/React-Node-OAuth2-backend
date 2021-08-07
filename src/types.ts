@@ -1,6 +1,6 @@
 export default interface IMongoDBUser {
     googleId?: string;
-    twitterId?: string;
+    facebookId?: string;
     githubId?: string;
     username: string;
     _id: string;

@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 import User from "../models/user.model";
 import IMongoDBUser from "../types";
+const FacebookStrategy = require("passport-facebook").Strategy;
 
 dotenv.config();
 
@@ -44,3 +45,28 @@ passport.use(new GoogleStrategy({
     });
   }
 ));
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL: "/auth/facebook/callback"
+}, 
+    (accessToken: any, refreshToken: any, profile: any, done: any) => {
+        User.findOne({ facebookId: profile.id}, async (err: Error, user: IMongoDBUser) => {
+            if(err)
+                return done(err, false);
+            if(user) {
+                console.log(user);
+                done(null, user);
+            } else {
+                const username = profile.displayName.replace(" ", "");
+                const newUser = new User({ 
+                    username, facebookId: profile.id
+                });
+                await newUser.save();
+                console.log("New User created ", newUser);
+                done(null, newUser);
+            }
+        });
+    }
+))
