@@ -21,7 +21,7 @@ const app = express();
 
 // 1. Middlewares
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
@@ -31,7 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req: any, res) => {
-    console.log("logged", req.session)
+    console.log("logged", req.sessionID)
     res.send("Welcome to React Node oAuth App");
 });
 
