@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Backend for React Node oAuth app",
   "main": "index.js",
+  "engine": { "node": "~12.18.3"},
+  "engineStrict": true,
   "scripts": {
     "start": "node build/dist/index.js",
     "heroku-prebuild": "yarn install",
@@ -10,7 +12,7 @@
     "dev": "nodemon --exec ts-node src/index.ts"
   },
   "keywords": [],
-  "author": "Tyran Creates",
+  "author": "Guillaume Mago",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
