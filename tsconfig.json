@@ -10,7 +10,7 @@
         "lib": ["es6", "dom"],
         "sourceMap": true,
         "allowJs": true,
-        "skipLibCheck": true,
+        "skipLibCheck": true, // tsc will skip through libraries when compiling
         "moduleResolution": "node",
         "rootDir": "src",
         "noImplicitAny": true,
