@@ -24,13 +24,15 @@ const app = express();
 // 1. Middlewares
 app.use(express.json());
 app.use(cors({ origin: `${process.env.CLIENT_ORIGIN}`, credentials: true }));
+
+app.set("trust proxy", 1);
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
     cookie: {
         maxAge: 24 * 60 * 60 * 1000, // 1 day
-        httpOnly: true,
         secure: true,
         sameSite: "none"
     }
