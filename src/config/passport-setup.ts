@@ -81,4 +81,4 @@ passport.use(new GithubStrategy({
 },  (accessToken: any, refreshToken: any, profile: any, done: any) => {
         strategyCallback("github", profile.username, profile, done);
     }
-))
+));

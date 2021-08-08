@@ -15,4 +15,5 @@
         "rootDir": "src",
         "noImplicitAny": true,
     },
+    "include": ["src/**/*"]
 }

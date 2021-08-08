@@ -5,16 +5,18 @@ import cors from "cors";
 import session from "express-session";
 import passport from "passport";
 import authRoutes from "./routes/auth-routes";
-import "./config/passport-setup.ts";
+import "./config/passport-setup";
 
 dotenv.config();
 
 mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useCreateIndex: true,
-    useUnifiedTopology: true });
-
+useUnifiedTopology: true });
 const connection = mongoose.connection;
 connection.once("open", () =>{
     console.log("MongoDB is connected");
+});
+connection.on("error", err => {
+    console.error(err);
 });
 
 const app = express();
