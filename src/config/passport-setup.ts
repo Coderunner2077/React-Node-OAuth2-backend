@@ -65,9 +65,9 @@ passport.use(new GoogleStrategy({
 ));
 
 passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_CLIENT_ID,
-    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: "/auth/facebook/callback"
+    clientID: `${process.env.FACEBOOK_CLIENT_ID}`,
+    clientSecret: `${process.env.FACEBOOK_CLIENT_SECRET}`,
+    callbackURL: "https://react-node-oauth2-backend.herokuapp.com/auth/facebook/callback"
 }, 
     (accessToken: any, refreshToken: any, profile: any, done: any) => {
         strategyCallback("facebook", profile.displayName.replace(" ", ""), profile, done);
@@ -77,7 +77,7 @@ passport.use(new FacebookStrategy({
 passport.use(new GithubStrategy({
     clientID: `${process.env.GITHUB_CLIENT_ID}`,
     clientSecret: `${process.env.GITHUB_CLIENT_SECRET}`,
-    callbackURL: "/auth/github/callback"
+    callbackURL: "https://react-node-oauth2-backend.herokuapp.com/auth/github/callback"
 },  (accessToken: any, refreshToken: any, profile: any, done: any) => {
         strategyCallback("github", profile.username, profile, done);
     }
