@@ -5,6 +5,7 @@ import cors from "cors";
 import session from "express-session";
 import passport from "passport";
 import authRoutes from "./routes/auth-routes";
+import cookieParser from "cookie-parser";
 import "./config/passport-setup";
 
 dotenv.config();
@@ -22,6 +23,7 @@ connection.on("error", err => {
 const app = express();
 
 // 1. Middlewares
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors({ origin: `${process.env.CLIENT_ORIGIN}`, credentials: true }));
 

@@ -77,8 +77,9 @@ passport.use(new FacebookStrategy({
 passport.use(new GithubStrategy({
     clientID: `${process.env.GITHUB_CLIENT_ID}`,
     clientSecret: `${process.env.GITHUB_CLIENT_SECRET}`,
-    callbackURL: "https://react-node-oauth2-backend.herokuapp.com/auth/github/callback"
+    callbackURL: "/auth/github/callback"
 },  (accessToken: any, refreshToken: any, profile: any, done: any) => {
+        console.log("strategy callback");
         strategyCallback("github", profile.username, profile, done);
     }
 ));
