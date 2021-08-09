@@ -37,7 +37,6 @@ const strategyCallback = (strategy: string, usernameValue: string, profile: any,
         default:
             where = { googleId: profile.id };
     }
-    console.log(strategy, where);
     User.findOne(where, async (err: Error, user: IMongoDBUser) => {
         if(err)
             return done(err, null);
@@ -48,7 +47,6 @@ const strategyCallback = (strategy: string, usernameValue: string, profile: any,
                 username: usernameValue, ...where
             });
             await newUser.save();
-            console.log("New User created ", newUser);
             return done(null, newUser);
         }
             
@@ -77,9 +75,8 @@ passport.use(new FacebookStrategy({
 passport.use(new GithubStrategy({
     clientID: `${process.env.GITHUB_CLIENT_ID}`,
     clientSecret: `${process.env.GITHUB_CLIENT_SECRET}`,
-    callbackURL: "/auth/github/callback"
+    callbackURL: "https://react-node-oauth2-backend.herokuapp.com/auth/github/callback"
 },  (accessToken: any, refreshToken: any, profile: any, done: any) => {
-        console.log("strategy callback");
         strategyCallback("github", profile.username, profile, done);
     }
 ));

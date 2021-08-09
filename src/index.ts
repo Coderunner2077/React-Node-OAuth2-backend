@@ -44,7 +44,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req: any, res) => {
-    console.log("logged", req.sessionID)
     res.send("Welcome to React Node oAuth App");
 });
 

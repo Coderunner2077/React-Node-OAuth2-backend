@@ -21,9 +21,8 @@ router.get("/facebook/callback", passport.authenticate("facebook", { failureRedi
 router.get("/github", passport.authenticate("github"));
 
 router.get("/github/callback", passport.authenticate("github", 
-    { successRedirect: "/", failureRedirect: "/login"}), 
+    { failureRedirect: "/login"}), 
     (req: any, res: any) => {
-        console.log("auth github callback");
         res.redirect(process.env.CLIENT_ORIGIN);
     }
 );
