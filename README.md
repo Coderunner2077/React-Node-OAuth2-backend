@@ -17,10 +17,10 @@ When deploying this code ensure that you fill out the ENVIORNMENT variables when
 
 ## Related Projects:
 
-* https://github.com/woodburydev/oauth-video -> Instead of Using Twitter strategy I used Facebook one
-* https://github.com/TyranReacts/React-Node-OAuth2-frontend -> Frontend of the api I reacreated after watching the same video
+* [Woodburydev Github Project](https://github.com/woodburydev/oauth-video) -> Instead of Using Twitter strategy I used Facebook one
+* [React Node OAuth Frontend](https://github.com/Coderunner2077/React-Node-OAuth2-frontend) -> Frontend of the api I reacreated after watching the same video
 
-Ensure *ALL* Auth providers match your respective backend endpoints:
+Ensure **_ALL_** Auth providers match your respective backend endpoints:
 
 * Google -> https://console.developers.google.com/apis/dashboard
 * Facebook -> https://developers.facebook.com/apps
