@@ -43,10 +43,11 @@ Ensure **_ALL_** Auth providers match your respective backend endpoints:
 * Switch to "Development" branch (git rebase -b Development)  
 * Fill out .env file with your secrets  
 * Make sure all auth providers are setup for http://localhost:4000  
-* Start ("yarn run dev")
+* Start ("yarn dev")
 
 ## For Production:
 
 * Switch to main branch (git rebase -b main)  
 * Fill out .env file with your secrets  
 * Make sure all auth providers are setup for your heroku app you made
+* Start ("yarn start")
